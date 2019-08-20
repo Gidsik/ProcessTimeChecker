@@ -26,7 +26,7 @@ namespace PTChecker
                     () => {
                         while (true)
                         {
-                            if (PSOnCheck())
+                            if (ProcessesCheck())
                             {
                                 DateTime start = PS.StartTime;
                                 DateTime end;
@@ -51,17 +51,20 @@ namespace PTChecker
 
         }
 
-        Boolean PSOnCheck()
+        Boolean ProcessesCheck()
         {
             System.Diagnostics.Process[] psProcess = System.Diagnostics.Process.GetProcessesByName("Photoshop");
 
-            MyProcess[] processes = (MyProcess[])System.Diagnostics.Process.GetProcesses()
-                .Where(x => x.ProcessName == "Photoshop");
+            List<String> targetProcesses = new List<String>();
+            targetProcesses.Add("Photoshop");
+            targetProcesses.Add("chrome");
+            targetProcesses.Add("explorer");
 
-            foreach (MyProcess process in processes)
-            {
-                Console.Write(process.ProcessName);
-            }
+            var processes = System.Diagnostics.Process.GetProcesses()
+                .Where( x => targetProcesses.Any( y => x.ProcessName == y ) );
+
+            MyProcess pc; pc.process = (MyProcess)processes.Last();
+
 
             if (psProcess.Length > 0)
             {
