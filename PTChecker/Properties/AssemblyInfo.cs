@@ -5,10 +5,10 @@ using System.Runtime.InteropServices;
 // Общие сведения об этой сборке предоставляются следующим набором
 // набора атрибутов. Измените значения этих атрибутов для изменения сведений,
 // связанных со сборкой.
-[assembly: AssemblyTitle("PTChecker")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyTitle("ProcessTimeChecker")]
+[assembly: AssemblyDescription("Process Time Checker")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
+[assembly: AssemblyCompany("Gidsik")]
 [assembly: AssemblyProduct("PTChecker")]
 [assembly: AssemblyCopyright("Copyright ©  2019")]
 [assembly: AssemblyTrademark("")]

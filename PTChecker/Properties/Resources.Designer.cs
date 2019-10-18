@@ -59,5 +59,35 @@ namespace PTChecker.Properties {
                 resourceCulture = value;
             }
         }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Icon, аналогичного (Значок).
+        /// </summary>
+        internal static System.Drawing.Icon AppIcon {
+            get {
+                object obj = ResourceManager.GetObject("AppIcon", resourceCulture);
+                return ((System.Drawing.Icon)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Icon, аналогичного (Значок).
+        /// </summary>
+        internal static System.Drawing.Icon efQ7jzLXw_4 {
+            get {
+                object obj = ResourceManager.GetObject("efQ7jzLXw_4", resourceCulture);
+                return ((System.Drawing.Icon)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Icon, аналогичного (Значок).
+        /// </summary>
+        internal static System.Drawing.Icon m4_ExyI97xs {
+            get {
+                object obj = ResourceManager.GetObject("m4_ExyI97xs", resourceCulture);
+                return ((System.Drawing.Icon)(obj));
+            }
+        }
     }
 }

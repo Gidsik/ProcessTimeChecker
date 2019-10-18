@@ -8,8 +8,11 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Runtime.InteropServices;
+using System.Management;
+using System.Diagnostics;
 
-namespace PTChecker
+namespace PTChecker.Forms
 {
     public partial class Form1 : Form
     {
@@ -38,6 +41,7 @@ namespace PTChecker
                                         label3.Text = end.ToString();
                                         TimeSpan dt2 = end - start;
                                         label4.Text = dt2.ToString();
+                                        MessageBox.Show(pc.closed.ToString());
                                     }
                                 };
                                 label1.Invoke(action);
@@ -47,10 +51,33 @@ namespace PTChecker
                         }
                     }
                 );
-            thread.Start();
-
+            //thread.Start();
+            ProcessStartWatching();
+            ProcessInfoWatcher.RunningProcesses();
         }
 
+        void ProcessStartWatching()
+        {
+            
+            ProcessInfoWatcher watcher = new ProcessInfoWatcher("notepad++.exe");
+            watcher.Started += (object sender, EventArrivedEventArgs e) =>
+            {
+                ManagementBaseObject targetInstanse = (ManagementBaseObject)e.NewEvent.Properties["TargetInstance"].Value;
+                int pid = Int32.Parse((string)targetInstanse.Properties["Handle"].Value);
+                Process process = Process.GetProcessById(pid);
+                Debug.WriteLine(DateTime.Now.ToLocalTime() + " " + process.ProcessName);
+            };
+            watcher.Terminated += (object sender, EventArrivedEventArgs e) =>
+            {
+                ManagementBaseObject targetInstanse = (ManagementBaseObject)e.NewEvent.Properties["TargetInstance"].Value;
+                int pid = Int32.Parse((string)targetInstanse.Properties["Handle"].Value);
+                Debug.WriteLine(DateTime.Now.ToLocalTime() + " " + pid.ToString());
+
+
+            };
+        }
+
+        MyProcess pc;
         Boolean ProcessesCheck()
         {
             System.Diagnostics.Process[] psProcess = System.Diagnostics.Process.GetProcessesByName("Photoshop");
@@ -63,12 +90,17 @@ namespace PTChecker
             var processes = System.Diagnostics.Process.GetProcesses()
                 .Where( x => targetProcesses.Any( y => x.ProcessName == y ) );
 
-            MyProcess pc; pc.process = (MyProcess)processes.Last();
-
+            
 
             if (psProcess.Length > 0)
             {
                 PS = psProcess[0];
+                if (!PS.HasExited)
+                {
+                    pc = new MyProcess(PS);
+                }
+                else { pc.Close(); }
+                
                 return true;
             }
             return false;

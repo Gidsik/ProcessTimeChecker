@@ -1,4 +1,4 @@
-﻿namespace PTChecker
+﻿namespace PTChecker.Forms
 {
     partial class Form1
     {
