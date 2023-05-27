@@ -22,7 +22,7 @@ namespace PTChecker
 
             icon.Icon = Properties.Resources.efQ7jzLXw_4;
             icon.ContextMenuStrip = new ContextMenuStrip();
-            icon.ContextMenuStrip.Items.Add(new ToolStripMenuItem("Show Form1", null, (s, e) => (new Forms.Form1()).Show()));
+            icon.ContextMenuStrip.Items.Add(new ToolStripMenuItem("Show Form1", null, (s, e) => (new Forms.TempFormForTesting()).Show()));
             icon.ContextMenuStrip.Items.Add(new ToolStripMenuItem("Show ProcessesForm", null, (s, e) => (new Forms.ProcessesForm()).Show()));
             icon.ContextMenuStrip.Items.Add(new ToolStripMenuItem("Settings", null, (s, e) => (new Forms.SettingsForm()).Show()));
             icon.ContextMenuStrip.Items.Add(new ToolStripSeparator());

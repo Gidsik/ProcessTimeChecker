@@ -1,6 +1,6 @@
 ﻿namespace PTChecker.Forms
 {
-    partial class Form1
+    partial class TempFormForTesting
     {
         /// <summary>
         /// Обязательная переменная конструктора.
@@ -152,7 +152,7 @@
             this.label9.MouseMove += new System.Windows.Forms.MouseEventHandler(this.Form1_MouseMove);
             this.label9.MouseUp += new System.Windows.Forms.MouseEventHandler(this.Form1_MouseUp);
             // 
-            // Form1
+            // TempFormForTesting
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -167,7 +167,7 @@
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
-            this.Name = "Form1";
+            this.Name = "TempFormForTesting";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "PTChecker";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.Form1_FormClosed);

@@ -9,7 +9,7 @@ using System.ComponentModel;
 using System.Reflection;
 using System.Data;
 using System.Management;
-
+using System.Runtime.InteropServices;
 
 namespace PTChecker
 {
@@ -48,6 +48,7 @@ namespace PTChecker
             watcher.EventArrived += new EventArrivedEventHandler(this.OnEventArrived);
             watcher.Start();
         }
+
         public void Dispose()
         {
             watcher.Stop();
@@ -101,6 +102,88 @@ namespace PTChecker
             return result;
         }
 
+        public static int NumberOfExemplars(string appName)
+        {
+
+            string queryString =
+                   $"SELECT Name " +
+                   "  FROM Win32_Process" +
+                   $"  WHERE Name = '{appName}'";
+
+            SelectQuery query = new SelectQuery(queryString);
+            ManagementScope scope = new System.Management.ManagementScope(@"\\.\root\CIMV2");
+
+            ManagementObjectSearcher searcher = new ManagementObjectSearcher(scope, query);
+
+            Debug.WriteLine(searcher.Get().Count);
+
+            return searcher.Get().Count;
+        }
+
+        public static Process GetParentOf(int id)
+        {
+            try
+            {
+                string queryString =
+                   $"SELECT * " +
+                   "  FROM Win32_Process" +
+                   $"  WHERE ProcessId = '{id}'";
+
+                SelectQuery query = new SelectQuery(queryString);
+                ManagementScope scope = new System.Management.ManagementScope(@"\\.\root\CIMV2");
+
+                ManagementObjectSearcher searcher = new ManagementObjectSearcher(scope, query);
+
+                return searcher
+                    .Get()
+                    .OfType<ManagementObject>()
+                    .Select(p => Process.GetProcessById((int)(uint)p["ParentProcessId"]))
+                    .FirstOrDefault();
+            }
+            catch(ManagementException ex)
+            {
+                Debug.WriteLine($"exeption at ProcessInfoWatcher.ParentOf() |source:{ex.Source} |message:{ex.Message}");
+                return null;
+            }
+        }
+
+        // More perfomanced and more old way to get parent mainProcess
+        //struct to hold NT info about parent mainProcess of some other mainProcess
+        [StructLayout(LayoutKind.Sequential)]
+        public struct ParentProcessUtilities
+        {
+            internal IntPtr Reserved1;
+            internal IntPtr PebBaseAddress;
+            internal IntPtr Reserved2_0;
+            internal IntPtr Reserved2_1;
+            internal IntPtr UniqueProcessId;
+            internal IntPtr InheritedFromUniqueProcessId;
+        }
+
+        // NT method to get info about mainProcess
+        [DllImport("ntdll.dll")]
+        private static extern int NtQueryInformationProcess(IntPtr processHandle, int processInformationClass, ref ParentProcessUtilities processInformation, int processInformationLength, out int returnLength);
+
+        // some magic...
+        public static Process GetParentProcess(IntPtr handle)
+        {
+            ParentProcessUtilities pbi = new ParentProcessUtilities();
+            int returnLength;
+            int status = NtQueryInformationProcess(handle, 0, ref pbi, Marshal.SizeOf(pbi), out returnLength);
+            if (status != 0)
+                throw new Win32Exception(status);
+
+            try
+            {
+                return Process.GetProcessById(pbi.InheritedFromUniqueProcessId.ToInt32());
+            }
+            catch (ArgumentException)
+            {
+                // not found
+                return null;
+            }
+        }
+        
         private void OnEventArrived(object sender, System.Management.EventArrivedEventArgs e)
         {
             try

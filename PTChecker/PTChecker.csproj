@@ -79,14 +79,21 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ClassesScr\AutoRunIt.cs" />
+    <Compile Include="ClassesScr\ProcessesManager.cs" />
     <Compile Include="ClassesScr\StatisticsManager.cs" />
-    <Compile Include="Forms\Form1.cs">
+    <Compile Include="Controls\TargetProcessControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\TargetProcessControl.Designer.cs">
+      <DependentUpon>TargetProcessControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\TempFormForTesting.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <Compile Include="Forms\TempFormForTesting.Designer.cs">
+      <DependentUpon>TempFormForTesting.cs</DependentUpon>
     </Compile>
-    <Compile Include="ClassesScr\MyProcess.cs" />
+    <Compile Include="ClassesScr\TargetProcess.cs" />
     <Compile Include="Forms\ProcessesForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -103,8 +110,11 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Settings.cs" />
-    <EmbeddedResource Include="Forms\Form1.resx">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <EmbeddedResource Include="Controls\TargetProcessControl.resx">
+      <DependentUpon>TargetProcessControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\TempFormForTesting.resx">
+      <DependentUpon>TempFormForTesting.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\ProcessesForm.resx">
       <DependentUpon>ProcessesForm.cs</DependentUpon>

@@ -1,22 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data;
 using System.Drawing;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace PTChecker.Forms
+namespace PTChecker.Controls
 {
-    public partial class ProcessesForm : Form
+    public partial class TargetProcessControl : UserControl
     {
-        public ProcessesForm()
+        public TargetProcessControl()
         {
             InitializeComponent();
-            
         }
-
     }
 }
