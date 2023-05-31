@@ -1,20 +1,21 @@
 using Gidsiks.ProcessTimeChecker.WorkerService.Database;
+using Gidsiks.ProcessTimeChecker.InterfaceContractLibrary.Types;
 using Microsoft.EntityFrameworkCore;
 using System.Runtime.InteropServices;
 using static User32Helper;
 
 namespace Gidsiks.ProcessTimeChecker.WorkerService.Services
 {
-	public class ProcessTimeWatcherService : BackgroundService
+	public class UserActivityHandlerService : BackgroundService
 	{
-		private readonly ILogger<ProcessTimeWatcherService> _logger;
+		private readonly ILogger<UserActivityHandlerService> _logger;
 
 		private readonly IServiceProvider _serviceProvider;
 
 		private IntPtr _hookHandle;
 		private WinEventDelegate _winEvent;
 
-		public ProcessTimeWatcherService(ILogger<ProcessTimeWatcherService> logger, IServiceProvider serviceProvider)
+		public UserActivityHandlerService(ILogger<UserActivityHandlerService> logger, IServiceProvider serviceProvider)
 		{
 			_logger = logger;
 			_serviceProvider = serviceProvider;
@@ -22,24 +23,24 @@ namespace Gidsiks.ProcessTimeChecker.WorkerService.Services
 
 		public override Task StartAsync(CancellationToken cancellationToken)
 		{
-			_logger.LogInformation("{name} Starting", nameof(ProcessTimeWatcherService));
+			_logger.LogInformation("{name} Starting", nameof(UserActivityHandlerService));
 
-			using (var dbConxtext = _serviceProvider.CreateScope().ServiceProvider.GetService<PTCheckerDbContext>())
+			using (var dbContext = _serviceProvider.CreateScope().ServiceProvider.GetService<PTCheckerDbContext>())
 			{
-				dbConxtext.Database.EnsureCreated();
+				dbContext.Database.EnsureCreated();
 
-				dbConxtext.ActivityEvents.Add(new Database.Tables.ActivityEvents()
+				dbContext.ActivityEvents.Add(new Database.Tables.ActivityEvents()
 				{
-					EventType = IsUserNowIdle() ? Types.EventType.IdleStarted : Types.EventType.ActivityStarted,
+					EventType = IsUserNowIdle() ? EventType.IdleStarted : EventType.ActivityStarted,
 					Timestamp = DateTime.UtcNow,
 				});
 
-				dbConxtext.WatchedApp.Where(p => p.IsWatched).ToList()
+				dbContext.WatchedApp.Where(p => p.IsWatched).ToList()
 					.ForEach(p =>
 					{
 
 					});
-				dbConxtext.SaveChanges();
+				dbContext.SaveChanges();
 			}
 
 			_winEvent = new WinEventDelegate(WinEventProc);
@@ -56,19 +57,19 @@ namespace Gidsiks.ProcessTimeChecker.WorkerService.Services
 
 		public override Task StopAsync(CancellationToken cancellationToken)
 		{
-			_logger.LogInformation("{name} Stopping", nameof(ProcessTimeWatcherService));
+			_logger.LogInformation("{name} Stopping", nameof(UserActivityHandlerService));
 
 			UnhookWinEvent(_hookHandle);
 
-			using (var dbConxtext = _serviceProvider.CreateScope().ServiceProvider.GetService<PTCheckerDbContext>())
+			using (var dbContext = _serviceProvider.CreateScope().ServiceProvider.GetService<PTCheckerDbContext>())
 			{
-				var activityEvent = dbConxtext.ActivityEvents.OrderBy(x => x.Id).Last();
-				dbConxtext.ActivityEvents.Add(new Database.Tables.ActivityEvents()
+				var activityEvent = dbContext.ActivityEvents.OrderBy(x => x.Id).Last();
+				dbContext.ActivityEvents.Add(new Database.Tables.ActivityEvents()
 				{
-					EventType = activityEvent.EventType == Types.EventType.IdleStarted ? Types.EventType.IdleStopped : Types.EventType.ActivityStopped,
+					EventType = activityEvent.EventType == EventType.IdleStarted ? EventType.IdleStopped : EventType.ActivityStopped,
 					Timestamp = DateTime.UtcNow,
 				});
-				dbConxtext.SaveChanges();
+				dbContext.SaveChanges();
 			}
 
 			return base.StopAsync(cancellationToken);
@@ -76,7 +77,7 @@ namespace Gidsiks.ProcessTimeChecker.WorkerService.Services
 
 		protected override async Task ExecuteAsync(CancellationToken stoppingToken)
 		{
-			_logger.LogInformation("{name} Has Started", nameof(ProcessTimeWatcherService));
+			_logger.LogInformation("{name} Has Started", nameof(UserActivityHandlerService));
 			while (!stoppingToken.IsCancellationRequested)
 			{
 				CheckIfActivityStateHasChanged();
@@ -86,41 +87,41 @@ namespace Gidsiks.ProcessTimeChecker.WorkerService.Services
 
 			void CheckIfActivityStateHasChanged()
 			{
-				using (var dbConxtext = _serviceProvider.CreateScope().ServiceProvider.GetService<PTCheckerDbContext>())
+				using (var dbContext = _serviceProvider.CreateScope().ServiceProvider.GetService<PTCheckerDbContext>())
 				{
-					var lastActivityEventType = dbConxtext.ActivityEvents.OrderBy(x => x.Id).Last().EventType;
-					if (lastActivityEventType == Types.EventType.ActivityStarted && IsUserNowIdle())
+					var lastActivityEventType = dbContext.ActivityEvents.OrderBy(x => x.Id).Last().EventType;
+					if (lastActivityEventType == EventType.ActivityStarted && IsUserNowIdle())
 					{
 						_logger.LogInformation("Activity state changed to Idle");
-						dbConxtext.ActivityEvents.Add(new Database.Tables.ActivityEvents()
+						dbContext.ActivityEvents.Add(new Database.Tables.ActivityEvents()
 						{
-							EventType = Types.EventType.ActivityStopped,
+							EventType = EventType.ActivityStopped,
 							Timestamp = DateTime.UtcNow,
 						});
-						dbConxtext.ActivityEvents.Add(new Database.Tables.ActivityEvents()
+						dbContext.ActivityEvents.Add(new Database.Tables.ActivityEvents()
 						{
-							EventType = Types.EventType.IdleStarted,
+							EventType = EventType.IdleStarted,
 							Timestamp = DateTime.UtcNow,
 						});
 					}
-					else if (lastActivityEventType == Types.EventType.IdleStarted && !IsUserNowIdle())
+					else if (lastActivityEventType == EventType.IdleStarted && !IsUserNowIdle())
 					{
 						_logger.LogInformation("Activity state changed to Active");
-						dbConxtext.ActivityEvents.Add(new Database.Tables.ActivityEvents()
+						dbContext.ActivityEvents.Add(new Database.Tables.ActivityEvents()
 						{
-							EventType = Types.EventType.IdleStopped,
+							EventType = EventType.IdleStopped,
 							Timestamp = DateTime.UtcNow,
 						});
-						dbConxtext.ActivityEvents.Add(new Database.Tables.ActivityEvents()
+						dbContext.ActivityEvents.Add(new Database.Tables.ActivityEvents()
 						{
-							EventType = Types.EventType.ActivityStarted,
+							EventType = EventType.ActivityStarted,
 							Timestamp = DateTime.UtcNow,
 						});
 					}
 					else
 					{
 					}
-					dbConxtext.SaveChanges();
+					dbContext.SaveChanges();
 				}
 			}
 		}
@@ -155,9 +156,9 @@ namespace Gidsiks.ProcessTimeChecker.WorkerService.Services
 		{
 			//var fwindowHandle = GetForegroundWindow(); //handle of new foreground window
 			//Int32 processHande;
-			GetWindowThreadProcessId(hForegroundWindow, out var processHande);
+			GetWindowThreadProcessId(hForegroundWindow, out var processHandle);
 
-			_logger.LogInformation("Window {hForegroundWindow} owned by {processHandle} | {hWinEventHook}", processHande, hForegroundWindow, hWinEventHook);
+			_logger.LogInformation("Window {hForegroundWindow} owned by {processHandle} | {hWinEventHook}", processHandle, hForegroundWindow, hWinEventHook);
 		}
 	}
 }

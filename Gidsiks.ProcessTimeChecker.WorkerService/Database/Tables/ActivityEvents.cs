@@ -1,4 +1,4 @@
-﻿using Gidsiks.ProcessTimeChecker.WorkerService.Types;
+﻿using Gidsiks.ProcessTimeChecker.InterfaceContractLibrary.Types;
 
 namespace Gidsiks.ProcessTimeChecker.WorkerService.Database.Tables
 {

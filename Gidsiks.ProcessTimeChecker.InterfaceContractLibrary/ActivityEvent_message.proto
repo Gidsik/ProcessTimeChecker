@@ -1,0 +1,13 @@
+syntax = "proto3";
+
+package Gidsiks.ProcessTimeChecker.InterfaceContractLibrary;
+option csharp_namespace = "Gidsiks.ProcessTimeChecker.InterfaceContractLibrary";
+
+import "google/protobuf/Timestamp.proto";
+
+
+message ActivityEvent {
+	int32 id = 1;
+	int32 event_type = 2;
+	google.protobuf.Timestamp timestamp = 3;
+}

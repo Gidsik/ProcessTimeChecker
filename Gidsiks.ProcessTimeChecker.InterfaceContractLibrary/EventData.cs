@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Gidsiks.ProcessTimeChecker.WorkerService.Types
+namespace Gidsiks.ProcessTimeChecker.InterfaceContractLibrary.Types
 {
 	public enum EventType
 	{

@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PTChecker", "PTChecker\PTCh
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Gidsiks.ProcessTimeChecker.WorkerService", "Gidsiks.ProcessTimeChecker.WorkerService\Gidsiks.ProcessTimeChecker.WorkerService.csproj", "{97D2F545-DE74-4BFF-83DD-9D1D83DDE169}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gidsiks.ProcessTimeChecker.InterfaceContractLibrary", "Gidsiks.ProcessTimeChecker.InterfaceContractLibrary\Gidsiks.ProcessTimeChecker.InterfaceContractLibrary.csproj", "{A960E8A0-B0DD-4B7A-A449-7F1887265E1B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{EABB4BE9-622E-405C-AF17-DF0F812E7851}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EABB4BE9-622E-405C-AF17-DF0F812E7851}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EABB4BE9-622E-405C-AF17-DF0F812E7851}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A960E8A0-B0DD-4B7A-A449-7F1887265E1B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A960E8A0-B0DD-4B7A-A449-7F1887265E1B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A960E8A0-B0DD-4B7A-A449-7F1887265E1B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A960E8A0-B0DD-4B7A-A449-7F1887265E1B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

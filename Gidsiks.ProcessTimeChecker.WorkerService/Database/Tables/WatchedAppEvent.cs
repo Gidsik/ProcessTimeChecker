@@ -1,4 +1,4 @@
-﻿using Gidsiks.ProcessTimeChecker.WorkerService.Types;
+﻿using Gidsiks.ProcessTimeChecker.InterfaceContractLibrary.Types;
 using System;
 using System.Collections.Generic;
 using System.Linq;

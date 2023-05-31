@@ -1,6 +1,8 @@
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Server.Kestrel.Core;
 using Gidsiks.ProcessTimeChecker.WorkerService.Database;
 using Gidsiks.ProcessTimeChecker.WorkerService.Services;
-using SQLitePCL;
 
 
 namespace Gidsiks.ProcessTimeChecker.WorkerService;
@@ -10,17 +12,24 @@ public class Program
 	[STAThread]
 	public static void Main(string[] args)
 	{
-		IHost host = Host.CreateDefaultBuilder(args)
-			.ConfigureServices(services =>
+		var builder = WebApplication.CreateBuilder(args);
+
+		builder.Services.AddSqlite<PTCheckerDbContext>("FileName=PTChecker.db");
+		builder.Services.AddHostedService<UserActivityHandlerService>();
+		builder.Services.AddGrpc();
+		builder.Services.AddWindowsService();
+
+		builder.WebHost.ConfigureKestrel(options =>
+		{
+			options.ListenLocalhost(28550, listenOptions =>
 			{
-				services.AddSqlite<PTCheckerDbContext>("FileName=PTChecker.db");
-				//services.AddDbContext<PTCheckerDbContext>();
+				listenOptions.Protocols = HttpProtocols.Http2;
+			});
+		});
+		WebApplication app = builder.Build();
 
-				services.AddHostedService<ProcessTimeWatcherService>();
-			})
-			.UseWindowsService()
-			.Build();
+		app.MapGrpcService<ProcessTimeCheckerService>();
 
-		host.Run();
+		app.Run();
 	}
 }
