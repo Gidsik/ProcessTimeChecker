@@ -1,0 +1,55 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.6.33712.159
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PTChecker", "PTChecker\PTChecker.csproj", "{35BF014F-42A5-402E-9F13-8F13DA01F35B}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Gidsiks.ProcessTimeChecker.WorkerService", "Gidsiks.ProcessTimeChecker.WorkerService\Gidsiks.ProcessTimeChecker.WorkerService.csproj", "{97D2F545-DE74-4BFF-83DD-9D1D83DDE169}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Gidsiks.ProcessTimeChecker.AvaloniaGUI", "Gidsiks.ProcessTimeChecker.AvaloniaGUI\Gidsiks.ProcessTimeChecker.AvaloniaGUI.csproj", "{16D2C897-6C89-446C-BA36-0C69D16D1AAF}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Gidsiks.ProcessTimeChecker.WinFormsGUI", "Gidsiks.ProcessTimeChecker.WinFormsGUI\Gidsiks.ProcessTimeChecker.WinFormsGUI.csproj", "{1A1C352B-19B6-4A94-9983-FD56EE050D03}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Gidsiks.ProcessTimeChecker.InterfaceContractLibrary", "Gidsiks.ProcessTimeChecker.InterfaceContractLibrary\Gidsiks.ProcessTimeChecker.InterfaceContractLibrary.csproj", "{A960E8A0-B0DD-4B7A-A449-7F1887265E1B}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{A67A293B-6AFB-4C2E-804B-6BF5B5443B41}"
+	ProjectSection(SolutionItems) = preProject
+		Directory.Build.Props = Directory.Build.Props
+		Gidsiks.ProcessTimeChecker.Common.Props = Gidsiks.ProcessTimeChecker.Common.Props
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{35BF014F-42A5-402E-9F13-8F13DA01F35B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{35BF014F-42A5-402E-9F13-8F13DA01F35B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{35BF014F-42A5-402E-9F13-8F13DA01F35B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{35BF014F-42A5-402E-9F13-8F13DA01F35B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{97D2F545-DE74-4BFF-83DD-9D1D83DDE169}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{97D2F545-DE74-4BFF-83DD-9D1D83DDE169}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{97D2F545-DE74-4BFF-83DD-9D1D83DDE169}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{97D2F545-DE74-4BFF-83DD-9D1D83DDE169}.Release|Any CPU.Build.0 = Release|Any CPU
+		{16D2C897-6C89-446C-BA36-0C69D16D1AAF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{16D2C897-6C89-446C-BA36-0C69D16D1AAF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{16D2C897-6C89-446C-BA36-0C69D16D1AAF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{16D2C897-6C89-446C-BA36-0C69D16D1AAF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1A1C352B-19B6-4A94-9983-FD56EE050D03}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1A1C352B-19B6-4A94-9983-FD56EE050D03}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1A1C352B-19B6-4A94-9983-FD56EE050D03}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1A1C352B-19B6-4A94-9983-FD56EE050D03}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A960E8A0-B0DD-4B7A-A449-7F1887265E1B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A960E8A0-B0DD-4B7A-A449-7F1887265E1B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A960E8A0-B0DD-4B7A-A449-7F1887265E1B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A960E8A0-B0DD-4B7A-A449-7F1887265E1B}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {1B045724-B917-4FC8-A034-D3D2627BCAD7}
+	EndGlobalSection
+EndGlobal
