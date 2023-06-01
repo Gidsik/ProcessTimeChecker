@@ -11,10 +11,10 @@ namespace Gidsiks.ProcessTimeChecker.WorkerService.Database.Tables
 	{
 		public int Id { get; set; }
 		public string? AppName { get; set; }
-		public string ProcessName { get; set; }
-		public string ExePath { get; set; }
+		public string? ProcessName { get; set; }
+		public string? ExePath { get; set; }
 		public bool IsWatched { get; set; }
 
-		public List<WatchedAppEvent> WatchedAppEvents { get; set; } = new List<WatchedAppEvent>();
+		public virtual List<WatchedAppEvent>? WatchedAppEvents { get; set; }
 	}
 }

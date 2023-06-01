@@ -2,7 +2,7 @@
 
 namespace Gidsiks.ProcessTimeChecker.WorkerService.Database.Tables
 {
-    public class ActivityEvents
+    public class ActivityEvent
     {
         public int Id { get; set; }
 		public EventType EventType { get; set; }

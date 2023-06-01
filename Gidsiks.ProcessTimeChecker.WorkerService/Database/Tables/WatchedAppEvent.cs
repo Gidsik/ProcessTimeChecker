@@ -11,7 +11,7 @@ namespace Gidsiks.ProcessTimeChecker.WorkerService.Database.Tables
 	{
 		public int Id { get; set; }
 		public int WatchedAppId { get; set; }
-		public WatchedApp WatchedApp { get; set; } = new WatchedApp();
+		public virtual WatchedApp? WatchedApp { get; set; }
 		public EventType EventType { get; set; }
 		public DateTime Timestamp { get; set; }
 	}
