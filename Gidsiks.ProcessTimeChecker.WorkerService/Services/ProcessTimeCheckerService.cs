@@ -13,10 +13,12 @@ namespace Gidsiks.ProcessTimeChecker.WorkerService.Services
 {
 	internal class ProcessTimeCheckerService : Gidsiks.ProcessTimeChecker.InterfaceContractLibrary.ProcessTimeCheckerService.ProcessTimeCheckerServiceBase
 	{
-		PTCheckerDbContext _dbContext;
+		private readonly ILogger<ProcessTimeCheckerService> _logger;
+		private readonly PTCheckerDbContext _dbContext;
 
-		public ProcessTimeCheckerService(PTCheckerDbContext dbContext)
+		public ProcessTimeCheckerService(ILogger<ProcessTimeCheckerService> logger, PTCheckerDbContext dbContext)
 		{
+			_logger = logger;
 			_dbContext = dbContext;
 		}
 
@@ -49,12 +51,13 @@ namespace Gidsiks.ProcessTimeChecker.WorkerService.Services
 
 		public override Task<GetActivityEventsResponse> GetActivityEventsFromDate(GetActivityEventsFromDateRequest request, ServerCallContext context)
 		{
+			_logger.LogInformation("GetActivityEventsFromDate requested with {fromTime} - {toTime}", request.FromTime, request.ToTime);
 			var fromTime = request.FromTime;
 			var toTime = request.ToTime;
 
 			if (toTime < fromTime)
 			{
-				throw new ArgumentException();
+				throw new ArgumentException("ToTime Date is earlier than FromTime");
 			}
 
 			var set = _dbContext.ActivityEvents
@@ -74,6 +77,7 @@ namespace Gidsiks.ProcessTimeChecker.WorkerService.Services
 
 		public override Task<GetActivityEventsResponse> GetActivityEventsLast(GetActivityEventsLastRequest request, ServerCallContext context)
 		{
+			_logger.LogInformation("GetActivityEventsLast requested with {fromId} - {count}", request.FromId, request.Count);
 			var count = (request.Count >= 1) ? request.Count : 100;
 			var lastId = _dbContext.ActivityEvents.OrderByDescending(x => x.Id).First().Id;
 			var fromId = request.FromId >=1 && request.FromId <= lastId ? request.FromId : lastId;
