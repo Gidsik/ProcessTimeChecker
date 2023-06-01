@@ -15,9 +15,9 @@ namespace Gidsiks.ProcessTimeChecker.WorkerService.Database
 		}
 
 
-		public DbSet<WatchedApp> WatchedApp { get; set; }
-		public DbSet<WatchedAppEvent> WatchedAppEvent { get; set; }
-		public DbSet<ActivityEvents> ActivityEvents { get; set; }
+		public DbSet<WatchedApp> WatchedApps { get; set; }
+		public DbSet<WatchedAppEvent> WatchedAppEvents { get; set; }
+		public DbSet<ActivityEvent> ActivityEvents { get; set; }
 
 
 		protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -28,7 +28,11 @@ namespace Gidsiks.ProcessTimeChecker.WorkerService.Database
 				.HasForeignKey(p => p.WatchedAppId);
 		}
 
-		protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) { }
+		protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+		{
+			optionsBuilder
+				.UseLazyLoadingProxies();
+		}
 
 	}
 }
