@@ -16,7 +16,6 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{A67A293B-6AFB-4C2E-804B-6BF5B5443B41}"
 	ProjectSection(SolutionItems) = preProject
 		Directory.Build.Props = Directory.Build.Props
-		Gidsiks.ProcessTimeChecker.Common.Props = Gidsiks.ProcessTimeChecker.Common.Props
 	EndProjectSection
 EndProject
 Global

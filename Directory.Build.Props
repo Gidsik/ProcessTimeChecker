@@ -71,7 +71,7 @@
 		</PropertyGroup>
 
 		<!-- Output For Debugging -->
-		<WriteLinesToFile File="VersionMSBuildOutput.txt"
+		<WriteLinesToFile File="$(SolutionDir)output/VersionMSBuildOutput.txt"
 						Lines="ReleaseTag=$(ReleaseTag);
 				TagBasedVersion = $(TagBasedVersion);
 				MyBuildVersion = $(MyBuildVersion);
